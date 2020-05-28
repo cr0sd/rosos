@@ -4,9 +4,23 @@ LDFLAGS= -melf_i386 -nostdlib -e loader -T link.ld
 OBJS=kernel.bin
 
 all: $(OBJS)
+
 kernel.bin: loader.o kernel.o
-	$(LD) $(LDFLAGS) $^ -o $@
+	@echo "  LD	kernel.bin"
+	@$(LD) $(LDFLAGS) $^ -o $@
+
 install:
-	cp ./kernel.bin /boot/mykernel.bin
+	@echo "  CP	kernel.bin"
+	@cp ./kernel.bin /boot/mykernel.bin
+
+%.o: %.c
+	@echo "  CC	$@"
+	@$(CC) $(CFLAGS) -c $^
+
+%.o: %.s
+	@echo "  AS	$@"
+	@$(AS) $(ASFLAGS) -c $^ -o $@
+
 clean:
-	$(RM) *.o kernel.bin
+	@echo "  RM	*.o kernel.bin"
+	@$(RM) *.o kernel.bin
