@@ -19,7 +19,7 @@ void fputs(FILE*f,char*s)
 
 #define puts(x) fputs(stdout,x)
 
-void putchar(FILE*f,char c)
+void fputc(char c,FILE*f)
 {
 	*f->offset++=0x1f00|c;
 }
@@ -40,11 +40,13 @@ void printif(FILE*f,int d)
 	b[i]=0;
 
 	// Print reversed string
-	for(++i;i>0;--i)
-		putchar(f,b[i]);
+	for(i;i>=0;--i)
+		fputc(b[i],f);
 }
 
 #define printi(x) printif(stdout,x)
+
+
 
 // Entry point
 void kernelmain(void*multiboot_structure,unsigned magicnumber)
