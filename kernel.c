@@ -1,4 +1,5 @@
 #define SPACE "                                                                                                "
+#define WIDTH 24
 
 // FILE type
 typedef struct FILE
@@ -21,7 +22,10 @@ void fputs(FILE*f,char*s)
 
 void fputc(char c,FILE*f)
 {
-	*f->offset++=0x1f00|c;
+	if(c=='\n')
+		f->seek=(f->seek+WIDTH)/WIDTH*WIDTH;
+	else
+		f->offset[f->seek++]=0x1f00|c;
 }
 
 // print integer
@@ -52,5 +56,5 @@ void printif(FILE*f,int d)
 void kernelmain(void*multiboot_structure,unsigned magicnumber)
 {
 	puts("Hello and welcome to my first operating system, yo!"SPACE);
-	printi(123);
+	printi((int)multiboot_structure);
 }
