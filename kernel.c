@@ -1,5 +1,5 @@
 #define SPACE "                                                                                                "
-#define WIDTH 24
+#define WIDTH 25
 
 // FILE type
 typedef struct FILE
@@ -11,15 +11,6 @@ typedef struct FILE
 
 FILE*stdout=&(FILE){.fd=0,.offset=(unsigned short*)0xb8000,.seek=0};
 
-// puts to FILE
-void fputs(FILE*f,char*s)
-{
-	for(unsigned i=0;s[i];++i)
-		*f->offset++=0x1f00|s[i];
-}
-
-#define puts(x) fputs(stdout,x)
-
 void fputc(char c,FILE*f)
 {
 	if(c=='\n')
@@ -27,6 +18,16 @@ void fputc(char c,FILE*f)
 	else
 		f->offset[f->seek++]=0x1f00|c;
 }
+
+// puts to FILE
+void fputs(FILE*f,char*s)
+{
+	for(unsigned i=0;s[i];++i)
+		//*f->offset++=0x1f00|s[i];
+		fputc(s[i],f);
+}
+
+#define puts(x) fputs(stdout,x)
 
 // print integer
 void printif(FILE*f,int d)
@@ -55,6 +56,6 @@ void printif(FILE*f,int d)
 // Entry point
 void kernelmain(void*multiboot_structure,unsigned magicnumber)
 {
-	puts("Hello and welcome to my first operating system, yo!"SPACE);
+	puts("Hello and welcome to my first operating system, yo!"SPACE"\n");
 	printi((int)multiboot_structure);
 }
