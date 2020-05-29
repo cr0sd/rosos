@@ -27,12 +27,21 @@ void putchar(FILE*f,char c)
 // print integer
 void printif(FILE*f,int d)
 {
+	char b[32];
+	int i=0;
+
+	// Get each digit as character
 	while(d>0)
 	{
 		int m=d%10;
 		d/=10;
-		putchar(f,m);
+		b[i++]=m+'0';
 	}
+	b[i]=0;
+
+	// Print reversed string
+	for(++i;i>0;--i)
+		putchar(f,b[i]);
 }
 
 #define printi(x) printif(stdout,x)
@@ -41,5 +50,5 @@ void printif(FILE*f,int d)
 void kernelmain(void*multiboot_structure,unsigned magicnumber)
 {
 	puts("Hello and welcome to my first operating system, yo!"SPACE);
-	printi(101);
+	printi(123);
 }
