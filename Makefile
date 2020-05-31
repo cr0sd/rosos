@@ -9,7 +9,7 @@ kernel.bin: loader.o kernel.o
 	@echo "  LD	kernel.bin"
 	@$(LD) $(LDFLAGS) $^ -o $@
 
-install:
+install: $(OBJS)
 	@echo "  CP	kernel.bin"
 	@cp ./kernel.bin /boot/mykernel.bin
 

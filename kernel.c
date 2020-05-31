@@ -1,5 +1,5 @@
 #define SPACE "                                                                                                "
-#define WIDTH 25
+#define WIDTH 80
 
 // FILE type
 typedef struct FILE
@@ -25,6 +25,7 @@ void fputs(FILE*f,char*s)
 	for(unsigned i=0;s[i];++i)
 		//*f->offset++=0x1f00|s[i];
 		fputc(s[i],f);
+	fputc('\n',f);
 }
 
 #define puts(x) fputs(stdout,x)
@@ -56,6 +57,8 @@ void printif(FILE*f,int d)
 // Entry point
 void kernelmain(void*multiboot_structure,unsigned magicnumber)
 {
-	puts("Hello and welcome to my first operating system, yo!"SPACE"\n");
+	puts("Hello and welcome to my first operating system, yo!"SPACE);
+	puts("This should be another line.");
+	puts("This should be yet another line.");
 	printi((int)multiboot_structure);
 }
